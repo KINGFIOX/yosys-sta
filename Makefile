@@ -1,18 +1,19 @@
-PROJ_PATH = $(shell pwd)
 SHELL := /bin/bash
 
-O ?= $(PROJ_PATH)/result
+# 与具体电路相关
 DESIGN ?= gcd
-SDC_FILE ?= $(PROJ_PATH)/scripts/default.sdc
+O ?= $(PROJ_PATH)/result
 RTL_FILES ?= $(shell find $(PROJ_PATH)/example -name "*.v")
+RESULT_DIR = $(O)/$(DESIGN)-$(CLK_FREQ_MHZ)MHz
 export CLK_FREQ_MHZ ?= 500
 export CLK_PORT_NAME ?= clk
-PDK = icsprout55
-
-RESULT_DIR = $(O)/$(DESIGN)-$(CLK_FREQ_MHZ)MHz
-SCRIPT_DIR = $(PROJ_PATH)/scripts
-NETLIST_SYN_V   = $(RESULT_DIR)/$(DESIGN).netlist.v
+NETLIST_SYN_V = $(RESULT_DIR)/$(DESIGN).netlist.v
 TIMING_RPT = $(RESULT_DIR)/$(DESIGN).rpt
+
+# 一些脚本
+SDC_FILE ?= $(YOSYS_STA_HOME)/scripts/default.sdc #
+SCRIPT_DIR = $(YOSYS_STA_HOME)/scripts
+PDK = icsprout55
 
 init:
 	bash -c "$$(wget -O - https://ysyx.oscc.cc/slides/resources/scripts/init-yosys-sta.sh)"
